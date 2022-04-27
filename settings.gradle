@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Bill Split App"
 include ':app'
+project(':app').projectDir = new File(rootDir, 'sources/base/app')
+include ':designsystem'
+project(':designsystem').projectDir = new File(rootDir, 'sources/base/designsystem')
