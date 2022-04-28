@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +30,11 @@ fun Group(
     ) {
         val isZeroDebt = overallDebt.compareTo(BigDecimal.ZERO) == 0
         val titleAlpha = if (isZeroDebt) 0.5f else 1f
-        Text(text = title, modifier = Modifier.alpha(titleAlpha))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.h6,
+            modifier = Modifier.alpha(titleAlpha)
+        )
 
         val debtText = when {
             isZeroDebt -> stringResource(R.string.group_no_debt_subtitle)
