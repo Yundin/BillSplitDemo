@@ -1,4 +1,4 @@
-package com.yundin.billsplitapp.ui.theme
+package com.yundin.designsystem.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
