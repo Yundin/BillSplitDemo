@@ -17,3 +17,5 @@ include ':app'
 project(':app').projectDir = new File(rootDir, 'sources/base/app')
 include ':designsystem'
 project(':designsystem').projectDir = new File(rootDir, 'sources/base/designsystem')
+include ':mainscreen'
+project(':mainscreen').projectDir = new File(rootDir, 'sources/features/mainscreen')
