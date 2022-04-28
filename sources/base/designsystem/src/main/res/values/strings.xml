@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="group_no_debt_subtitle">Doesn\'t owe you anything</string>
+    <string name="group_debt_subtitle_format">Owe you %.2f</string>
+    <string name="contact_no_debt_subtitle">Doesn\'t owes you anything</string>
+    <string name="contact_debt_subtitle_format">Owes you %.2f</string>
+</resources>

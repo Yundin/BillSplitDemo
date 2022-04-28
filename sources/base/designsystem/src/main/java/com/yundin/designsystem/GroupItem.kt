@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yundin.designsystem.theme.BillSplitAppTheme
@@ -31,8 +32,8 @@ fun Group(
         Text(text = title, modifier = Modifier.alpha(titleAlpha))
 
         val debtText = when {
-            isZeroDebt -> "Doesn't owe you anything"
-            else -> "Owe you ${overallDebt.toPlainString()}"
+            isZeroDebt -> stringResource(R.string.group_no_debt_subtitle)
+            else -> stringResource(R.string.group_debt_subtitle_format, overallDebt)
         }
         Text(text = debtText, color = Color.Gray)
     }

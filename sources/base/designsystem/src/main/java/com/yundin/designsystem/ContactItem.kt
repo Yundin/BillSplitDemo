@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yundin.designsystem.theme.BillSplitAppTheme
@@ -26,10 +27,10 @@ fun Contact(
             .padding(16.dp)
     ) {
         Text(text = name)
-        val zeroDebt = debt.compareTo(BigDecimal.ZERO) == 0
+        val isZeroDebt = debt.compareTo(BigDecimal.ZERO) == 0
         val debtText = when {
-            zeroDebt -> "Doesn't owes you anything"
-            else -> "Owes you ${debt.toPlainString()}"
+            isZeroDebt -> stringResource(R.string.contact_no_debt_subtitle)
+            else -> stringResource(R.string.contact_debt_subtitle_format, debt)
         }
         Text(text = debtText, color = Color.Gray)
     }
