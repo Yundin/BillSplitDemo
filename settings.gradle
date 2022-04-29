@@ -23,3 +23,5 @@ include ':datasource'
 project(':datasource').projectDir = new File(rootDir, 'sources/base/datasource')
 include ':mainscreen'
 project(':mainscreen').projectDir = new File(rootDir, 'sources/features/mainscreen')
+include ':grouplist'
+project(':grouplist').projectDir = new File(rootDir, 'sources/features/grouplist')
