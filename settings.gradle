@@ -19,5 +19,7 @@ include ':core'
 project(':core').projectDir = new File(rootDir, 'sources/base/core')
 include ':designsystem'
 project(':designsystem').projectDir = new File(rootDir, 'sources/base/designsystem')
+include ':datasource'
+project(':datasource').projectDir = new File(rootDir, 'sources/base/datasource')
 include ':mainscreen'
 project(':mainscreen').projectDir = new File(rootDir, 'sources/features/mainscreen')
