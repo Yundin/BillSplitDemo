@@ -12,6 +12,9 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+enableFeaturePreview('VERSION_CATALOGS')
+
 rootProject.name = "Bill Split App"
 include ':app'
 project(':app').projectDir = new File(rootDir, 'sources/base/app')
