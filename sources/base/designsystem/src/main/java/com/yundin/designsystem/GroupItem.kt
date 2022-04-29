@@ -18,7 +18,7 @@ import com.yundin.designsystem.theme.BillSplitAppTheme
 import java.math.BigDecimal
 
 @Composable
-fun Group(
+fun GroupItem(
     title: String,
     overallDebt: BigDecimal,
     modifier: Modifier = Modifier,
@@ -50,7 +50,7 @@ fun Group(
 fun GroupPreview() {
     BillSplitAppTheme {
         Surface {
-            Group(title = "Title", overallDebt = BigDecimal(100))
+            GroupItem(title = "Title", overallDebt = BigDecimal(100))
         }
     }
 }
@@ -61,7 +61,7 @@ fun GroupPreview() {
 fun GroupNoDebtPreview() {
     BillSplitAppTheme {
         Surface {
-            Group(title = "Title", overallDebt = BigDecimal.ZERO)
+            GroupItem(title = "Title", overallDebt = BigDecimal.ZERO)
         }
     }
 }
