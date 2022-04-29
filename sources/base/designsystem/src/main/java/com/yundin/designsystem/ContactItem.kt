@@ -16,7 +16,7 @@ import com.yundin.designsystem.theme.BillSplitAppTheme
 import java.math.BigDecimal
 
 @Composable
-fun Contact(
+fun ContactItem(
     name: String,
     debt: BigDecimal,
     modifier: Modifier = Modifier,
@@ -42,7 +42,7 @@ fun Contact(
 fun ContactPreview() {
     BillSplitAppTheme {
         Surface {
-            Contact(name = "Name", debt = BigDecimal(100))
+            ContactItem(name = "Name", debt = BigDecimal(100))
         }
     }
 }
@@ -52,7 +52,7 @@ fun ContactPreview() {
 fun ContactNoDebtPreview() {
     BillSplitAppTheme {
         Surface {
-            Contact(name = "Name", debt = BigDecimal.ZERO)
+            ContactItem(name = "Name", debt = BigDecimal.ZERO)
         }
     }
 }
