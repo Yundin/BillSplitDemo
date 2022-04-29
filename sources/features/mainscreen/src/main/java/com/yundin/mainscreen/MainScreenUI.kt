@@ -1,32 +1,28 @@
 package com.yundin.mainscreen
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import com.yundin.navigation.Screen
 
 @Composable
-fun MainScreenUI() {
-    val navController = rememberNavController()
+fun MainScreenUI(
+    navController: NavController,
+    navHost: @Composable (PaddingValues) -> Unit
+) {
     Scaffold(
         bottomBar = { BottomBar(navController) }
     ) { innerPadding ->
-        NavHost(navController, startDestination = Screen.Groups.route, Modifier.padding(innerPadding)) {
-            composable(Screen.Groups.route) { Text("Groups") }
-            composable(Screen.Contacts.route) { Text("Contacts") }
-        }
+        navHost(innerPadding)
     }
 }
 
@@ -36,8 +32,8 @@ private fun BottomBar(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         listOf(
-            Screen.Groups,
-            Screen.Contacts,
+            BottomNavigationScreen.Groups,
+            BottomNavigationScreen.Contacts,
         ).forEach { screen ->
             BottomNavigationItem(
                 icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
@@ -64,7 +60,7 @@ private fun BottomBar(navController: NavController) {
     }
 }
 
-private sealed class Screen(val route: String, @StringRes val resourceId: Int) {
-    object Groups : Screen("groups", R.string.groups_bottom_bar_title)
-    object Contacts : Screen("contacts", R.string.contacts_bottom_bar_title)
+private sealed class BottomNavigationScreen(val route: String, @StringRes val resourceId: Int) {
+    object Groups : BottomNavigationScreen(Screen.Groups.route, R.string.groups_bottom_bar_title)
+    object Contacts : BottomNavigationScreen(Screen.Contacts.route, R.string.contacts_bottom_bar_title)
 }

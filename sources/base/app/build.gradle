@@ -51,6 +51,7 @@ dependencies {
     implementation project(':grouplist')
     implementation project(':mainscreen')
     implementation project(':datasource')
+    implementation project(':navigation')
     implementation project(':designsystem')
 
     implementation libs.androidx.activity.compose
