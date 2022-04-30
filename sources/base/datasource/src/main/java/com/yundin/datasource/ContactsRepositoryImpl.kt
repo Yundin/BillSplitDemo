@@ -5,8 +5,9 @@ import com.yundin.core.repository.ContactsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.math.BigDecimal
+import javax.inject.Inject
 
-class ContactsRepositoryImpl : ContactsRepository {
+class ContactsRepositoryImpl @Inject constructor(): ContactsRepository {
     override val contacts: Flow<List<Contact>>
         get() = flow {
             emit(

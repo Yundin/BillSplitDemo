@@ -30,3 +30,5 @@ include ':mainscreen'
 project(':mainscreen').projectDir = new File(rootDir, 'sources/features/mainscreen')
 include ':grouplist'
 project(':grouplist').projectDir = new File(rootDir, 'sources/features/grouplist')
+include ':contactslist'
+project(':contactslist').projectDir = new File(rootDir, 'sources/features/contactslist')

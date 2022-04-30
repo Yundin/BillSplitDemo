@@ -1,3 +1,5 @@
 package com.yundin.core
 
-interface ApplicationProvider: GroupListDependencies
+interface ApplicationProvider :
+    GroupListDependencies,
+    ContactsListDependencies
