@@ -2,4 +2,6 @@
 <resources>
     <string name="groups_bottom_bar_title">Groups</string>
     <string name="contacts_bottom_bar_title">Contacts</string>
+    <string name="new_group_fab">Create group</string>
+    <string name="new_contact_fab">Add contact</string>
 </resources>

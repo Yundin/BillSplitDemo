@@ -19,5 +19,7 @@ internal fun AppNavigation(
     NavHost(navController, startDestination = Screen.Groups.route, modifier = modifier) {
         composable(Screen.Groups.route) { GroupListScreen() }
         composable(Screen.Contacts.route) { ContactsListScreen() }
+        composable(Screen.AddContact.route) { /*TODO replace*/ GroupListScreen() }
+        composable(Screen.AddGroup.route) { /*TODO replace*/ ContactsListScreen() }
     }
 }

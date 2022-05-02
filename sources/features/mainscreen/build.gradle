@@ -34,6 +34,7 @@ dependencies {
 
     implementation libs.bundles.compose
     implementation libs.compose.preview
+    implementation libs.androidx.compose.material.icons
     debugImplementation libs.compose.preview
 
     implementation libs.navigation
