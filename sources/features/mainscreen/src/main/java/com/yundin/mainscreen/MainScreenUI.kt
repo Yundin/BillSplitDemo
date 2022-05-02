@@ -6,19 +6,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.yundin.designsystem.AppBottomBar
+import com.yundin.designsystem.AppFloatingActionButton
+import com.yundin.designsystem.BottomBarTab
 import com.yundin.navigation.Screen
 
 @Composable
@@ -39,9 +37,10 @@ private fun BottomBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val currentTab = MainTab.getByRoute(currentDestination?.route)
+
     BottomBarContent(
         visible = currentTab != null,
-        isSelected = { screen ->
+        isTabSelected = { screen ->
             currentDestination?.hierarchy?.any { it.route == screen.route } == true
         },
         navigate = { screen ->
@@ -66,72 +65,33 @@ private fun BottomBar(navController: NavController) {
 @Composable
 private fun BottomBarContent(
     visible: Boolean,
-    isSelected: (Screen) -> Boolean,
+    isTabSelected: (Screen) -> Boolean,
     navigate: (Screen) -> Unit
 ) {
-    AnimatedVisibility(
+    AppBottomBar(
         visible = visible,
-        enter = slideInVertically { it },
-        exit = slideOutVertically { it }
-    ) {
-        BottomNavigation {
+        tabs = {
             MainTab.values().forEach { tab ->
-                BottomNavigationItem(
-                    icon = { Icon(tab.barIcon, contentDescription = null) },
-                    label = { Text(stringResource(tab.barTitleRes)) },
-                    selected = isSelected(tab.screen),
-                    onClick = {
-                        navigate(tab.screen)
-                    }
+                BottomBarTab(
+                    icon = tab.barIcon,
+                    titleRes = tab.barTitleRes,
+                    isSelected = isTabSelected(tab.screen),
+                    navigate = { navigate(tab.screen) },
                 )
             }
-
         }
-    }
+    )
 }
 
 @Composable
 private fun MainFloatingActionButton(navController: NavController) {
     val destinationRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val currentTab = MainTab.getByRoute(destinationRoute)
-    MainFloatingActionButtonContent(
+    AppFloatingActionButton(
         visible = currentTab != null,
         textRes = currentTab?.fabTextRes,
         onClick = { currentTab?.fabScreen?.route?.let { navController.navigate(it) } }
     )
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-private fun MainFloatingActionButtonContent(
-    visible: Boolean,
-    @StringRes textRes: Int?,
-    onClick: () -> Unit,
-) {
-    AnimatedVisibility(
-        visible = visible,
-        enter = slideInVertically { it * 2 },
-        exit = slideOutVertically { it * 2 },
-    ) {
-        FloatingActionButton(onClick = onClick) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(
-                    start = 20.dp,
-                    end = 20.dp
-                ),
-            ) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-                Spacer(Modifier.width(12.dp))
-                AnimatedContent(
-                    targetState = textRes,
-                    transitionSpec = { slideInVertically { -it } with slideOutVertically { it } }
-                ) { textRes ->
-                    textRes?.let { Text(stringResource(it)) }
-                }
-            }
-        }
-    }
 }
 
 private enum class MainTab(
