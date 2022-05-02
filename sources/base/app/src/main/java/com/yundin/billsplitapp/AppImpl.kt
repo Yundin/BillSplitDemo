@@ -1,6 +1,8 @@
 package com.yundin.billsplitapp
 
 import android.app.Application
+import com.yundin.billsplitapp.di.AppComponent
+import com.yundin.billsplitapp.di.DaggerAppComponent
 import com.yundin.core.App
 import com.yundin.core.ApplicationProvider
 

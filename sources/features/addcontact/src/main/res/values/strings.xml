@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="contact_added_format">%s added to contact list</string>
+    <string name="empty_name_error">Enter name of contact</string>
+</resources>

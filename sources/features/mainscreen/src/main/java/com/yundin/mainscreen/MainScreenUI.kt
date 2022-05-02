@@ -22,9 +22,11 @@ import com.yundin.navigation.Screen
 @Composable
 fun MainScreenUI(
     navController: NavController,
+    scaffoldState: ScaffoldState,
     navHost: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
+        scaffoldState = scaffoldState,
         bottomBar = { BottomBar(navController) },
         floatingActionButton = { MainFloatingActionButton(navController) }
     ) { innerPadding ->
