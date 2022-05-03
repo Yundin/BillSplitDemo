@@ -65,17 +65,7 @@ class ChooseContactsViewModel @Inject constructor(
     fun onAddContactClick() {
         val name = inputName.nonNullValue
         if (name.isNotBlank()) {
-            val addedContact = contactsRepository.addContact(name)
-            _inputName.value = ""
-            _snackbarText.value = resourceProvider.getString(
-                R.string.contact_added_and_checked_format,
-                name
-            )
-            viewModelScope.launch {
-                selectedContactIds.emit(
-                    selectedContactIds.value.toMutableList().apply { add(addedContact.id) }
-                )
-            }
+            addContact(name)
         } else {
             _snackbarText.value = resourceProvider.getString(R.string.empty_name_error)
         }
@@ -93,6 +83,24 @@ class ChooseContactsViewModel @Inject constructor(
 
     private val <T> LiveData<T>.nonNullValue: T
         get() = checkNotNull(value)
+
+    private fun addContact(name: String) {
+        try {
+            val addedContact = contactsRepository.addContact(name)
+            _inputName.value = ""
+            _snackbarText.value = resourceProvider.getString(
+                R.string.contact_added_and_checked_format,
+                name
+            )
+            viewModelScope.launch {
+                selectedContactIds.emit(
+                    selectedContactIds.value.toMutableList().apply { add(addedContact.id) }
+                )
+            }
+        } catch (_: IllegalArgumentException) {
+            _snackbarText.value = resourceProvider.getString(R.string.contact_exists_error)
+        }
+    }
 }
 
 data class UiContact(

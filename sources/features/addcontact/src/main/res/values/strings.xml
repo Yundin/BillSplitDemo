@@ -2,4 +2,5 @@
 <resources>
     <string name="contact_added_format">%s added to contact list</string>
     <string name="empty_name_error">Enter name of contact</string>
+    <string name="contact_exists_error">Contact with this name already exists</string>
 </resources>

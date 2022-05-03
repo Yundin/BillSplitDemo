@@ -22,6 +22,9 @@ class ContactsRepositoryImpl @Inject constructor() : ContactsRepository {
 
 
     override fun addContact(name: String): Contact {
+        if (contactList.any { it.name == name }) {
+            throw IllegalArgumentException("Contact already exists")
+        }
         val contact = Contact(
             id = contactList.maxOf { it.id } + 1,
             name = name,

@@ -3,8 +3,11 @@ package com.yundin.addcontact
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yundin.core.repository.ContactsRepository
 import com.yundin.core.utils.ResourceProvider
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AddContactViewModel @Inject constructor(
@@ -24,9 +27,7 @@ class AddContactViewModel @Inject constructor(
     fun onAddContactClick() {
         val name = _newContactName.value
         if (!name.isNullOrBlank()) {
-            contactsRepository.addContact(name)
-            _newContactName.value = ""
-            _snackbarText.value = resourceProvider.getString(R.string.contact_added_format, name)
+            addContact(name)
         } else {
             _snackbarText.value = resourceProvider.getString(R.string.empty_name_error)
         }
@@ -34,5 +35,15 @@ class AddContactViewModel @Inject constructor(
 
     fun onSnackbarShown() {
         _snackbarText.value = null
+    }
+
+    private fun addContact(name: String) {
+        try {
+            contactsRepository.addContact(name)
+            _newContactName.value = ""
+            _snackbarText.value = resourceProvider.getString(R.string.contact_added_format, name)
+        } catch (_: IllegalArgumentException) {
+            _snackbarText.value = resourceProvider.getString(R.string.contact_exists_error)
+        }
     }
 }
