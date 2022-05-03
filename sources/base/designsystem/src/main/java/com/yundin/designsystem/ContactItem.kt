@@ -18,7 +18,7 @@ import java.math.BigDecimal
 @Composable
 fun ContactItem(
     name: String,
-    debt: BigDecimal,
+    debt: BigDecimal?,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -27,12 +27,14 @@ fun ContactItem(
             .padding(16.dp)
     ) {
         Text(text = name)
-        val isZeroDebt = debt.compareTo(BigDecimal.ZERO) == 0
-        val debtText = when {
-            isZeroDebt -> stringResource(R.string.contact_no_debt_subtitle)
-            else -> stringResource(R.string.contact_debt_subtitle_format, debt)
+        if (debt != null) {
+            val isZeroDebt = debt.compareTo(BigDecimal.ZERO) == 0
+            val debtText = when {
+                isZeroDebt -> stringResource(R.string.contact_no_debt_subtitle)
+                else -> stringResource(R.string.contact_debt_subtitle_format, debt)
+            }
+            Text(text = debtText, color = Color.Gray)
         }
-        Text(text = debtText, color = Color.Gray)
     }
 }
 
