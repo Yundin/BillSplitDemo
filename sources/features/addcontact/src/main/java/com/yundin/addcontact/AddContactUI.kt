@@ -17,7 +17,7 @@ import com.yundin.designsystem.AddContactButton
 
 @Composable
 fun AddContactScreen(
-    showShackbar: suspend (String) -> Unit
+    showSnackbar: (String) -> Unit
 ) {
     val app = LocalContext.current.applicationContext as App
     val viewModel: AddContactViewModel = viewModel(
@@ -31,7 +31,7 @@ fun AddContactScreen(
     val snackbarText by viewModel.snackbarText.observeAsState()
     LaunchedEffect(snackbarText) {
         if (snackbarText != null) {
-            showShackbar(snackbarText!!)
+            showSnackbar(snackbarText!!)
             viewModel.onSnackbarShown()
         }
     }
@@ -44,7 +44,7 @@ fun AddContactScreen(
 }
 
 @Composable
-fun AddContactScreenContent(
+private fun AddContactScreenContent(
     name: String?,
     onNameChange: (String) -> Unit,
     onAddClick: () -> Unit
@@ -53,7 +53,8 @@ fun AddContactScreenContent(
         TextField(
             value = name.orEmpty(),
             onValueChange = onNameChange,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
         )
         AddContactButton(
             contactName = name,

@@ -21,7 +21,7 @@ internal fun AppNavigation(
         composable(Screen.Groups.route) { GroupListScreen() }
         composable(Screen.Contacts.route) { ContactsListScreen() }
         composable(Screen.AddContact.route) {
-            AddContactScreen(showShackbar = showSnackbar)
+            AddContactScreen(showSnackbar = showSnackbar)
         }
         composable(Screen.AddGroup.route) { /*TODO replace*/ ContactsListScreen() }
     }
