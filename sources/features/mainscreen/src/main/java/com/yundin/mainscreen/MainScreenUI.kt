@@ -1,9 +1,9 @@
 package com.yundin.mainscreen
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Receipt

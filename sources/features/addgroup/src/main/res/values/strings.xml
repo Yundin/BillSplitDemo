@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="group_title_hint">Group title</string>
+    <string name="check_amount_hint">Amount spent</string>
+    <string name="add_group_participants_btn">Add participants</string>
+    <string name="create_group_btn">Create group</string>
+    <string name="group_title_validation_error">Enter group title</string>
+    <string name="check_amount_validation_error">Enter check amount</string>
+    <string name="group_added">Group added</string>
+</resources>

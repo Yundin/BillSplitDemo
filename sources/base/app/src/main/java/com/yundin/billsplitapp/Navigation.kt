@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.yundin.addcontact.AddContactScreen
+import com.yundin.addgroup.AddGroupScreen
 import com.yundin.contactslist.ContactsListScreen
 import com.yundin.grouplist.GroupListScreen
 import com.yundin.navigation.Screen
@@ -23,6 +24,11 @@ internal fun AppNavigation(
         composable(Screen.AddContact.route) {
             AddContactScreen(showSnackbar = showSnackbar)
         }
-        composable(Screen.AddGroup.route) { /*TODO replace*/ ContactsListScreen() }
+        composable(Screen.AddGroup.route) {
+            AddGroupScreen(
+                navController = navController,
+                showSnackbar = showSnackbar
+            )
+        }
     }
 }

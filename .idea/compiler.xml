@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="Bill_Split_App.addcontact" target="11" />
+      <module name="Bill_Split_App.addgroup" target="11" />
       <module name="Bill_Split_App.app" target="11" />
       <module name="Bill_Split_App.contactslist" target="11" />
       <module name="Bill_Split_App.core" target="11" />
