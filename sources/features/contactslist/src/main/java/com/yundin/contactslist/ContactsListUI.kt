@@ -29,7 +29,10 @@ fun ContactsListScreen() {
     val contacts: List<Contact>? by viewModel.contacts.observeAsState()
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(contacts.orEmpty()) { contact ->
-            ContactItem(name = contact.name, debt = contact.owesOverall)
+            ContactItem(
+                name = contact.name,
+                debt = null
+            )
         }
     }
 }

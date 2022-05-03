@@ -14,5 +14,5 @@ data class Group(
 data class GroupContact(
     val id: Long,
     val name: String,
-    val owes: BigDecimal
+    val checked: Boolean
 )

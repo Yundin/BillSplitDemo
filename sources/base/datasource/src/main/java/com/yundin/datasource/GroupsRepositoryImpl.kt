@@ -2,44 +2,41 @@ package com.yundin.datasource
 
 import com.yundin.core.dagger.scope.AppScope
 import com.yundin.core.model.Group
-import com.yundin.core.model.GroupContact
 import com.yundin.core.repository.GroupsRepository
+import com.yundin.datasource.database.dao.GroupDao
+import com.yundin.datasource.database.entity.GroupContactCrossRef
+import com.yundin.datasource.database.entity.GroupEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
 
 @AppScope
-class GroupsRepositoryImpl @Inject constructor() : GroupsRepository {
-    private val contacts = listOf(
-        GroupContact(0, "Contact 1", BigDecimal.ONE),
-        GroupContact(0, "Contact 2", BigDecimal.ZERO)
-    )
-    private var groupsList = listOf(
-        Group(0, "Title 1", Date(), BigDecimal.ZERO, contacts),
-        Group(0, "Title 2", Date(), BigDecimal.ONE, contacts),
-    )
-    private val groupsFlow: MutableStateFlow<List<Group>> =
-        MutableStateFlow(groupsList)
-
-
+class GroupsRepositoryImpl @Inject constructor(
+    private val groupDao: GroupDao
+) : GroupsRepository {
     override val groups: Flow<List<Group>>
-        get() = groupsFlow
+        get() = groupDao.getGroups()
 
-    override fun addGroup(title: String, sum: BigDecimal, contactIds: List<Long>): Group {
-        val newGroup = Group(
-            id = groupsList.maxOf { it.id } + 1,
-            title,
-            Date(),
-            amountSpent = sum,
-            contacts
+    override suspend fun addGroup(title: String, sum: BigDecimal, contactIds: List<Long>): Group {
+        val groupId = groupDao.addGroup(
+            GroupEntity(
+                groupId = 0,
+                title = title,
+                createdDate = Date(),
+                checkAmount = sum
+            )
         )
-        val newList = groupsList.toMutableList().apply {
-            add(newGroup)
-        }
-        groupsFlow.value = newList
-        groupsList = newList
-        return newGroup
+        groupDao.addGroupPersonJoin(
+            contactIds.map {
+                GroupContactCrossRef(
+                    groupId = groupId,
+                    contactId = it,
+                    checked = false
+                )
+            }
+        )
+        return groupDao.getGroupById(groupId).first()
     }
 }

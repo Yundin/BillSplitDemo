@@ -3,9 +3,11 @@ package com.yundin.addgroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yundin.core.model.Contact
 import com.yundin.core.repository.GroupsRepository
 import com.yundin.core.utils.ResourceProvider
+import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -36,15 +38,17 @@ class AddGroupViewModel @Inject constructor(
 
     fun onAddGroupClick() {
         if (validateWithErrors()) {
-            groupRepository.addGroup(
-                title = currentUiState.groupTitle.text,
-                sum = BigDecimal(currentUiState.checkAmount.text),
-                contactIds = currentUiState.contacts.map { it.id }
-            )
-            _uiState.value = currentUiState.copy(
-                snackbarText = resourceProvider.getString(R.string.group_added),
-                screenFinished = true
-            )
+            viewModelScope.launch {
+                groupRepository.addGroup(
+                    title = currentUiState.groupTitle.text,
+                    sum = BigDecimal(currentUiState.checkAmount.text),
+                    contactIds = currentUiState.contacts.map { it.id }
+                )
+                _uiState.value = currentUiState.copy(
+                    snackbarText = resourceProvider.getString(R.string.group_added),
+                    screenFinished = true
+                )
+            }
         }
     }
 

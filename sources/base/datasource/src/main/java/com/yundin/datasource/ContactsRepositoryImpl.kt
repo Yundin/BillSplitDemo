@@ -3,38 +3,25 @@ package com.yundin.datasource
 import com.yundin.core.dagger.scope.AppScope
 import com.yundin.core.model.Contact
 import com.yundin.core.repository.ContactsRepository
+import com.yundin.datasource.database.dao.ContactDao
+import com.yundin.datasource.database.entity.ContactEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import java.math.BigDecimal
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @AppScope
-class ContactsRepositoryImpl @Inject constructor() : ContactsRepository {
-    private var contactList = listOf(
-        Contact(0, "Contact 1", BigDecimal.ZERO),
-        Contact(1, "Contact 2", BigDecimal.ONE)
-    )
-    private val contactsFlow: MutableStateFlow<List<Contact>> =
-        MutableStateFlow(contactList)
-
+class ContactsRepositoryImpl @Inject constructor(
+    private val contactDao: ContactDao
+) : ContactsRepository {
     override val contacts: Flow<List<Contact>>
-        get() = contactsFlow
-
-
-    override fun addContact(name: String): Contact {
-        if (contactList.any { it.name == name }) {
-            throw IllegalArgumentException("Contact already exists")
+        get() = contactDao.getAll().map { contacts ->
+            contacts.map { it.toDomain() }
         }
-        val contact = Contact(
-            id = contactList.maxOf { it.id } + 1,
-            name = name,
-            owesOverall = BigDecimal.ZERO
+
+    override suspend fun addContact(name: String): Contact {
+        val addedId = contactDao.addContact(
+            ContactEntity(0, name)
         )
-        val newList = contactList.toMutableList().apply {
-            add(contact)
-        }
-        contactsFlow.value = newList
-        contactList = newList
-        return contact
+        return contactDao.getById(addedId).toDomain()
     }
 }

@@ -1,5 +1,6 @@
 package com.yundin.choosecontacts
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.*
 import com.yundin.core.model.Contact
 import com.yundin.core.repository.ContactsRepository
@@ -20,7 +21,11 @@ class ChooseContactsViewModel @Inject constructor(
     private val allContacts: Flow<List<Contact>> = contactsRepository.contacts
     private val selectedContactIds = MutableStateFlow(listOf<Long>())
     private val contactListFlow: Flow<List<UiContact>> =
-        combine(allContacts, selectedContactIds, inputName.asFlow()) { contacts, selectedIds, inputName ->
+        combine(
+            allContacts,
+            selectedContactIds,
+            inputName.asFlow()
+        ) { contacts, selectedIds, inputName ->
             return@combine contacts
                 .filter { it.name.contains(inputName) }
                 .map {
@@ -85,20 +90,20 @@ class ChooseContactsViewModel @Inject constructor(
         get() = checkNotNull(value)
 
     private fun addContact(name: String) {
-        try {
-            val addedContact = contactsRepository.addContact(name)
-            _inputName.value = ""
-            _snackbarText.value = resourceProvider.getString(
-                R.string.contact_added_and_checked_format,
-                name
-            )
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
+                val addedContact = contactsRepository.addContact(name)
+                _inputName.value = ""
+                _snackbarText.value = resourceProvider.getString(
+                    R.string.contact_added_and_checked_format,
+                    name
+                )
                 selectedContactIds.emit(
                     selectedContactIds.value.toMutableList().apply { add(addedContact.id) }
                 )
+            } catch (_: SQLiteConstraintException) {
+                _snackbarText.value = resourceProvider.getString(R.string.contact_exists_error)
             }
-        } catch (_: IllegalArgumentException) {
-            _snackbarText.value = resourceProvider.getString(R.string.contact_exists_error)
         }
     }
 }

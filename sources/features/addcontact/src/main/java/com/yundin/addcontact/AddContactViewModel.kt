@@ -1,12 +1,12 @@
 package com.yundin.addcontact
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yundin.core.repository.ContactsRepository
 import com.yundin.core.utils.ResourceProvider
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,12 +38,15 @@ class AddContactViewModel @Inject constructor(
     }
 
     private fun addContact(name: String) {
-        try {
-            contactsRepository.addContact(name)
-            _newContactName.value = ""
-            _snackbarText.value = resourceProvider.getString(R.string.contact_added_format, name)
-        } catch (_: IllegalArgumentException) {
-            _snackbarText.value = resourceProvider.getString(R.string.contact_exists_error)
+        viewModelScope.launch {
+            try {
+                contactsRepository.addContact(name)
+                _newContactName.value = ""
+                _snackbarText.value =
+                    resourceProvider.getString(R.string.contact_added_format, name)
+            } catch (_: SQLiteConstraintException) {
+                _snackbarText.value = resourceProvider.getString(R.string.contact_exists_error)
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -20,11 +21,19 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
 }
 
 dependencies {
     implementation project (':core')
 
     implementation libs.dagger.runtime
+    kapt libs.dagger.compiler
     implementation libs.coroutines
+    implementation libs.androidx.room.runtime
+    kapt libs.androidx.room.compiler
 }
