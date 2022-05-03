@@ -5,15 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -22,6 +19,7 @@ import com.yundin.choosecontacts.di.DaggerChooseContactsComponent
 import com.yundin.core.App
 import com.yundin.core.utils.daggerViewModelFactory
 import com.yundin.designsystem.AddContactButton
+import com.yundin.designsystem.CheckableContactItem
 import com.yundin.navigation.Screen
 import kotlinx.coroutines.launch
 
@@ -99,20 +97,13 @@ private fun ChooseContactsScreenContent(
         )
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(contacts) { contact ->
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .clickable { onContactClick(contact) }
-                        .padding(16.dp)
-                ) {
-                    Text(text = contact.name)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(
-                        Icons.Filled.Check,
-                        null,
-                        modifier = Modifier.alpha(if (contact.checked) 1f else 0f)
-                    )
-                }
+                CheckableContactItem(
+                    name = contact.name,
+                    checked = contact.checked,
+                    modifier = Modifier.clickable {
+                        onContactClick(contact)
+                    }
+                )
             }
         }
     }
