@@ -1,8 +1,8 @@
-package com.yundin.core.scope
+package com.yundin.core.dagger.scope
 
 import javax.inject.Scope
 
 @Scope
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-annotation class AppScope
+annotation class FeatureScope

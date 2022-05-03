@@ -19,16 +19,6 @@ class AddGroupViewModel @Inject constructor(
         get() = checkNotNull(_uiState.value)
     val uiState: LiveData<UiState> = _uiState
 
-    init {
-        val contactList = listOf(
-            Contact(0, "Contact 1", BigDecimal.ZERO),
-            Contact(0, "Contact 2", BigDecimal.ONE)
-        )
-        _uiState.value = currentUiState.copy(
-            contacts = contactList
-        )
-    }
-
     fun onTitleChange(title: String) {
         _uiState.value = currentUiState.copy(
             groupTitle = FieldState(title)
@@ -62,6 +52,14 @@ class AddGroupViewModel @Inject constructor(
         _uiState.value = currentUiState.copy(
             snackbarText = null
         )
+    }
+
+    fun onContactsAdded(contacts: List<Contact>?) {
+        if (currentUiState.contacts != contacts && contacts != null) {
+            _uiState.value = currentUiState.copy(
+                contacts = contacts
+            )
+        }
     }
 
     private fun validateWithErrors(): Boolean {

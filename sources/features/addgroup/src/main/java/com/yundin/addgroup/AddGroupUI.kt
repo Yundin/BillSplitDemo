@@ -1,6 +1,6 @@
 package com.yundin.addgroup
 
-import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -31,8 +30,9 @@ import androidx.navigation.NavController
 import com.yundin.addgroup.di.DaggerAddGroupComponent
 import com.yundin.core.App
 import com.yundin.core.model.Contact
-import com.yundin.core.utils.daggerViewModel
+import com.yundin.core.utils.daggerViewModelFactory
 import com.yundin.designsystem.ContactItem
+import com.yundin.navigation.Screen
 
 @Composable
 fun AddGroupScreen(
@@ -41,7 +41,7 @@ fun AddGroupScreen(
 ) {
     val app = LocalContext.current.applicationContext as App
     val viewModel: AddGroupViewModel = viewModel(
-        factory = daggerViewModel {
+        factory = daggerViewModelFactory {
             DaggerAddGroupComponent.builder()
                 .addGroupDependencies(app.getAppProvider())
                 .build()
@@ -60,6 +60,13 @@ fun AddGroupScreen(
             navController.popBackStack()
         }
     }
+    val chooseContactsResult = navController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.getLiveData<List<Contact>>(Screen.ChooseContacts.route)
+        ?.observeAsState()
+    LaunchedEffect(chooseContactsResult) {
+        viewModel.onContactsAdded(chooseContactsResult?.value)
+    }
     AddGroupScreenContent(
         groupTitle = uiState.groupTitle.text,
         titleError = uiState.groupTitle.errorText,
@@ -68,7 +75,10 @@ fun AddGroupScreen(
         amountError = uiState.checkAmount.errorText,
         onAmountChange = viewModel::onAmountChange,
         contacts = uiState.contacts,
-        onAddGroupClick = viewModel::onAddGroupClick
+        onAddGroupClick = viewModel::onAddGroupClick,
+        onAddParticipantsClick = {
+            navController.navigate(Screen.ChooseContacts.route)
+        }
     )
 }
 
@@ -82,6 +92,7 @@ private fun AddGroupScreenContent(
     amountError: String?,
     onAmountChange: (String) -> Unit,
     contacts: List<Contact>?,
+    onAddParticipantsClick: () -> Unit,
     onAddGroupClick: () -> Unit
 ) {
     Column(
@@ -126,6 +137,7 @@ private fun AddGroupScreenContent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable(onClick = onAddParticipantsClick)
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {

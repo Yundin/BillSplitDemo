@@ -1,9 +1,9 @@
 package com.yundin.datasource
 
+import com.yundin.core.dagger.scope.AppScope
 import com.yundin.core.model.Group
 import com.yundin.core.model.GroupContact
 import com.yundin.core.repository.GroupsRepository
-import com.yundin.core.scope.AppScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.math.BigDecimal
@@ -11,7 +11,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AppScope
-class GroupsRepositoryImpl @Inject constructor(): GroupsRepository {
+class GroupsRepositoryImpl @Inject constructor() : GroupsRepository {
     private val contacts = listOf(
         GroupContact(0, "Contact 1", BigDecimal.ONE),
         GroupContact(0, "Contact 2", BigDecimal.ZERO)
@@ -27,19 +27,19 @@ class GroupsRepositoryImpl @Inject constructor(): GroupsRepository {
     override val groups: Flow<List<Group>>
         get() = groupsFlow
 
-    override fun addGroup(title: String, sum: BigDecimal, contactIds: List<Long>) {
+    override fun addGroup(title: String, sum: BigDecimal, contactIds: List<Long>): Group {
+        val newGroup = Group(
+            id = groupsList.maxOf { it.id } + 1,
+            title,
+            Date(),
+            amountSpent = sum,
+            contacts
+        )
         val newList = groupsList.toMutableList().apply {
-            add(
-                Group(
-                    id = 0,
-                    title,
-                    Date(),
-                    amountSpent = sum,
-                    contacts
-                )
-            )
+            add(newGroup)
         }
         groupsFlow.value = newList
         groupsList = newList
+        return newGroup
     }
 }

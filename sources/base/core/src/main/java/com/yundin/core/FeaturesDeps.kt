@@ -21,3 +21,8 @@ interface AddGroupDependencies {
     val groupsRepository: GroupsRepository
     val resourceProvider: ResourceProvider
 }
+
+interface ChooseContactsDependencies {
+    val contactsRepository: ContactsRepository
+    val resourceProvider: ResourceProvider
+}

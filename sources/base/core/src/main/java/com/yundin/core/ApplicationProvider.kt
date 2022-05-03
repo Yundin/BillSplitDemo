@@ -4,4 +4,5 @@ interface ApplicationProvider :
     GroupListDependencies,
     ContactsListDependencies,
     AddContactDependencies,
-    AddGroupDependencies
+    AddGroupDependencies,
+    ChooseContactsDependencies

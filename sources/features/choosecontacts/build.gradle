@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 }
@@ -8,24 +8,12 @@ android {
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.yundin.billsplitapp"
         minSdk rootProject.minSdkVersion
         targetSdk rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,33 +21,27 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         compose true
     }
     composeOptions {
         kotlinCompilerExtensionVersion libs.versions.compose.get()
     }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
 }
 
 dependencies {
-    implementation project(':core')
-    implementation project(':addgroup')
-    implementation project(':grouplist')
-    implementation project(':mainscreen')
-    implementation project(':datasource')
-    implementation project(':navigation')
-    implementation project(':addcontact')
-    implementation project(':contactslist')
-    implementation project(':designsystem')
-    implementation project(':choosecontacts')
 
-    implementation libs.androidx.activity.compose
+    implementation project(':core')
+    implementation project(':navigation')
+    implementation project(':designsystem')
+
     implementation libs.bundles.compose
+    implementation libs.compose.preview
+    debugImplementation libs.compose.tooling
+    implementation libs.compose.runtime.livedata
+    implementation libs.androidx.lifecycle.livedata
+
     implementation libs.navigation
     implementation libs.dagger.runtime
     kapt libs.dagger.compiler

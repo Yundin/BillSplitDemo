@@ -2,7 +2,7 @@ package com.yundin.billsplitapp.di
 
 import android.app.Application
 import com.yundin.core.ApplicationProvider
-import com.yundin.core.scope.AppScope
+import com.yundin.core.dagger.scope.AppScope
 import com.yundin.datasource.di.DataSourceModule
 import dagger.BindsInstance
 import dagger.Component
@@ -10,7 +10,7 @@ import dagger.Component
 @[AppScope Component(
     modules = [
         DataSourceModule::class,
-        ContextModule::class
+        ContextModule::class,
     ]
 )]
 interface AppComponent : ApplicationProvider {

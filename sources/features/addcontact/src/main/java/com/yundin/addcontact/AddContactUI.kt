@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yundin.addcontact.di.DaggerAddContactComponent
 import com.yundin.core.App
-import com.yundin.core.utils.daggerViewModel
+import com.yundin.core.utils.daggerViewModelFactory
 import com.yundin.designsystem.AddContactButton
 
 @Composable
@@ -21,12 +21,10 @@ fun AddContactScreen(
 ) {
     val app = LocalContext.current.applicationContext as App
     val viewModel: AddContactViewModel = viewModel(
-        factory = daggerViewModel {
-            DaggerAddContactComponent.builder()
-                .addContactDependencies(app.getAppProvider())
-                .build()
-                .viewModel
-        }
+        factory = daggerViewModelFactory(
+            dependencies = app.getAppProvider(),
+            builder = DaggerAddContactComponent.builder()
+        )
     )
     val snackbarText by viewModel.snackbarText.observeAsState()
     LaunchedEffect(snackbarText) {

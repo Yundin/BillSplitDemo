@@ -12,14 +12,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yundin.contactslist.di.DaggerContactsListComponent
 import com.yundin.core.App
 import com.yundin.core.model.Contact
-import com.yundin.core.utils.daggerViewModel
+import com.yundin.core.utils.daggerViewModelFactory
 import com.yundin.designsystem.ContactItem
 
 @Composable
 fun ContactsListScreen() {
     val app = LocalContext.current.applicationContext as App
     val viewModel: ContactsListViewModel = viewModel(
-        factory = daggerViewModel {
+        factory = daggerViewModelFactory {
             DaggerContactsListComponent.builder()
                 .contactsListDependencies(app.getAppProvider())
                 .build()

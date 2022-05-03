@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yundin.core.App
 import com.yundin.core.model.Group
-import com.yundin.core.utils.daggerViewModel
+import com.yundin.core.utils.daggerViewModelFactory
 import com.yundin.designsystem.GroupItem
 import com.yundin.grouplist.di.DaggerGroupListComponent
 
@@ -19,7 +19,7 @@ import com.yundin.grouplist.di.DaggerGroupListComponent
 fun GroupListScreen() {
     val app = LocalContext.current.applicationContext as App
     val viewModel: GroupListViewModel = viewModel(
-        factory = daggerViewModel {
+        factory = daggerViewModelFactory {
             DaggerGroupListComponent.builder()
                 .groupListDependencies(app.getAppProvider())
                 .build()

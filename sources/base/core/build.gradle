@@ -25,6 +25,7 @@ android {
 dependencies {
     implementation libs.dagger.runtime
     implementation libs.coroutines
+    implementation libs.androidx.lifecycle.livedata
 
     // ViewModel for utils
     implementation libs.viewmodel
