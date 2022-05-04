@@ -10,6 +10,7 @@ interface GroupListDependencies {
 
 interface ContactsListDependencies {
     val contactsRepository: ContactsRepository
+    val resourceProvider: ResourceProvider
 }
 
 interface AddContactDependencies {

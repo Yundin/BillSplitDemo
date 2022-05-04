@@ -24,4 +24,13 @@ class ContactsRepositoryImpl @Inject constructor(
         )
         return contactDao.getById(addedId).toDomain()
     }
+
+    override suspend fun removeContact(id: Long): Boolean {
+        val joinData = contactDao.getJoinTable()
+        if (joinData.any { it.contactId == id && !it.checked }) {
+            return false
+        }
+        contactDao.removeContact(id)
+        return true
+    }
 }

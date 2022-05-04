@@ -41,7 +41,7 @@ data class UiGroup(
         domain.id,
         domain.title,
         domain.amountSpent.divide(
-            BigDecimal.valueOf(domain.contacts.size + 1L),
+            BigDecimal.valueOf(domain.participantsCount + 1L),
             2,
             RoundingMode.HALF_UP
         ).let { personSum ->

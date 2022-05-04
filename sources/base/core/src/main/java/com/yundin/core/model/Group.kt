@@ -8,6 +8,7 @@ data class Group(
     val title: String,
     val dateCreated: Date,
     val amountSpent: BigDecimal,
+    val participantsCount: Int,
     val contacts: List<GroupContact>,
 )
 

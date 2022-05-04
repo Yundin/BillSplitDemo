@@ -33,11 +33,12 @@ data class GroupWithContacts(
     fun toDomain(): Group {
         val checkedContactsMap = groupContacts.associate { it.contactId to it.checked }
         return Group(
-            group.groupId,
-            group.title,
-            group.createdDate,
-            group.checkAmount,
-            contacts.map { contactEntity ->
+            id = group.groupId,
+            title = group.title,
+            dateCreated = group.createdDate,
+            amountSpent = group.checkAmount,
+            participantsCount = groupContacts.size,
+            contacts = contacts.map { contactEntity ->
                 GroupContact(
                     contactEntity.contactId,
                     contactEntity.name,

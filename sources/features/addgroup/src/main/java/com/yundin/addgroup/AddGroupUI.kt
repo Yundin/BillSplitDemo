@@ -147,7 +147,7 @@ private fun AddGroupScreenContent(
         }
         if (!contacts.isNullOrEmpty()) {
             for (contact in contacts) {
-                ContactItem(name = contact.name, debt = null)
+                ContactItem(name = contact.name, debt = null, { /*TODO*/ })
             }
         }
         Spacer(modifier = Modifier.weight(1f))

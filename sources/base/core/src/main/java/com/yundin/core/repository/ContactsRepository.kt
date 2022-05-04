@@ -12,4 +12,9 @@ interface ContactsRepository {
      */
     @Throws(SQLiteConstraintException::class)
     suspend fun addContact(name: String): Contact
+
+    /**
+     * @return true if contact was deleted, false if there is debt on this contact
+     */
+    suspend fun removeContact(id: Long): Boolean
 }

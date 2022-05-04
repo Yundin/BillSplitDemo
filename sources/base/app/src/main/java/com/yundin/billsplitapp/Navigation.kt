@@ -21,7 +21,9 @@ internal fun AppNavigation(
 ) {
     NavHost(navController, startDestination = Screen.Groups.route, modifier = modifier) {
         composable(Screen.Groups.route) { GroupListScreen() }
-        composable(Screen.Contacts.route) { ContactsListScreen() }
+        composable(Screen.Contacts.route) {
+            ContactsListScreen(showSnackbar = showSnackbar)
+        }
         composable(Screen.AddContact.route) {
             AddContactScreen(showSnackbar = showSnackbar)
         }

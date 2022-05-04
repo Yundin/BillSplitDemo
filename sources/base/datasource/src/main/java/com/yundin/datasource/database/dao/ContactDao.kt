@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.yundin.datasource.database.entity.ContactEntity
+import com.yundin.datasource.database.entity.GroupContactCrossRef
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,4 +17,10 @@ interface ContactDao {
 
     @Insert
     suspend fun addContact(contact: ContactEntity): Long
+
+    @Query("DELETE FROM contacts WHERE contactid = :id")
+    suspend fun removeContact(id: Long)
+
+    @Query("SELECT * FROM groupcontactcrossref")
+    suspend fun getJoinTable(): List<GroupContactCrossRef>
 }

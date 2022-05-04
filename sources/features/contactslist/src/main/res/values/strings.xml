@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_contacts">No contacts added</string>
+    <string name="contact_could_not_be_deleted">Contact with debt could not be deleted</string>
 </resources>
