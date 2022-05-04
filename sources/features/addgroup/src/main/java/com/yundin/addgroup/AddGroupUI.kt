@@ -77,8 +77,12 @@ fun AddGroupScreen(
         contacts = uiState.contacts,
         onAddGroupClick = viewModel::onAddGroupClick,
         onAddParticipantsClick = {
+            val contactIds = uiState.contacts.map { it.id }.toLongArray()
             navController.navigate(Screen.ChooseContacts.route)
-        }
+            navController.currentBackStackEntry
+                ?.arguments?.putLongArray("selectedIds", contactIds)
+        },
+        onRemoveContactClick = viewModel::onRemoveContactClick
     )
 }
 
@@ -93,7 +97,8 @@ private fun AddGroupScreenContent(
     onAmountChange: (String) -> Unit,
     contacts: List<Contact>?,
     onAddParticipantsClick: () -> Unit,
-    onAddGroupClick: () -> Unit
+    onAddGroupClick: () -> Unit,
+    onRemoveContactClick: (Contact) -> Unit
 ) {
     Column(
         Modifier
@@ -147,7 +152,11 @@ private fun AddGroupScreenContent(
         }
         if (!contacts.isNullOrEmpty()) {
             for (contact in contacts) {
-                ContactItem(name = contact.name, debt = null, { /*TODO*/ })
+                ContactItem(
+                    name = contact.name,
+                    debt = null,
+                    onRemoveClick = { onRemoveContactClick(contact) }
+                )
             }
         }
         Spacer(modifier = Modifier.weight(1f))

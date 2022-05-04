@@ -52,6 +52,16 @@ class AddGroupViewModel @Inject constructor(
         }
     }
 
+    fun onRemoveContactClick(contact: Contact) {
+        _uiState.value = currentUiState.copy(
+            contacts = currentUiState.contacts
+                .toMutableList()
+                .apply {
+                    remove(contact)
+                }
+        )
+    }
+
     fun onSnackbarShown() {
         _uiState.value = currentUiState.copy(
             snackbarText = null
@@ -81,6 +91,14 @@ class AddGroupViewModel @Inject constructor(
                 checkAmount = currentUiState.checkAmount.copy(
                     errorText = resourceProvider.getString(R.string.check_amount_validation_error)
                 )
+            )
+            allValid = false
+        }
+        if (currentUiState.contacts.isEmpty()) {
+            _uiState.value = currentUiState.copy(
+                snackbarText = resourceProvider.getString(
+                    R.string.no_participants_validation_error
+                ),
             )
             allValid = false
         }

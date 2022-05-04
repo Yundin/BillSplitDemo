@@ -5,5 +5,5 @@ sealed class Screen(val route: String) {
     object Contacts : Screen("contacts")
     object AddContact : Screen("contacts/add")
     object AddGroup : Screen("groups/add")
-    object ChooseContacts : Screen("contacts/choose")
+    object ChooseContacts : Screen("contacts/choose?selectedIds={selectedIds}")
 }

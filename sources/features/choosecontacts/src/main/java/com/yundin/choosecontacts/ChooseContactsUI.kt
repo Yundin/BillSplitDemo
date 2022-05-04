@@ -26,7 +26,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun ChooseContactsScreen(
     navController: NavController,
-    showSnackbar: (String) -> Unit
+    showSnackbar: (String) -> Unit,
+    selectedIds: LongArray?
 ) {
     val app = LocalContext.current.applicationContext as App
     val viewModel: ChooseContactsViewModel = viewModel(
@@ -35,6 +36,11 @@ fun ChooseContactsScreen(
             builder = DaggerChooseContactsComponent.builder()
         )
     )
+    LaunchedEffect(selectedIds) {
+        if (selectedIds != null) {
+            viewModel.setSelectedIds(selectedIds)
+        }
+    }
     val snackbarText by viewModel.snackbarText.observeAsState()
     LaunchedEffect(snackbarText) {
         if (snackbarText != null) {

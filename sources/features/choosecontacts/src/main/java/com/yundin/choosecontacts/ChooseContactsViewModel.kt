@@ -1,6 +1,7 @@
 package com.yundin.choosecontacts
 
 import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import androidx.lifecycle.*
 import com.yundin.core.model.Contact
 import com.yundin.core.repository.ContactsRepository
@@ -44,6 +45,11 @@ class ChooseContactsViewModel @Inject constructor(
                 _contactList.value = it
             }
         }
+    }
+
+    fun setSelectedIds(selected: LongArray) {
+        Log.d("ASDSAD get", selected.joinToString())
+        viewModelScope.launch { selectedContactIds.emit(selected.toList()) }
     }
 
     fun onNameChange(name: String) {

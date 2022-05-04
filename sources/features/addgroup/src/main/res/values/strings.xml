@@ -7,4 +7,5 @@
     <string name="group_title_validation_error">Enter group title</string>
     <string name="check_amount_validation_error">Enter check amount</string>
     <string name="group_added">Group added</string>
+    <string name="no_participants_validation_error">Add at least one participant</string>
 </resources>
