@@ -19,13 +19,17 @@ class GroupsRepositoryImpl @Inject constructor(
     override val groups: Flow<List<Group>>
         get() = groupDao.getGroups()
 
+    override fun getById(groupId: Long): Flow<Group> {
+        return groupDao.getGroupById(groupId)
+    }
+
     override suspend fun addGroup(title: String, sum: BigDecimal, contactIds: List<Long>): Group {
         val groupId = groupDao.addGroup(
             GroupEntity(
                 groupId = 0,
                 title = title,
                 createdDate = Date(),
-                checkAmount = sum
+                checkAmount = sum.setScale(2)
             )
         )
         groupDao.addGroupPersonJoin(
@@ -38,5 +42,14 @@ class GroupsRepositoryImpl @Inject constructor(
             }
         )
         return groupDao.getGroupById(groupId).first()
+    }
+
+    override suspend fun setContactChecked(
+        groupId: Long,
+        contactId: Long,
+        checked: Boolean
+    ) {
+        val ref = groupDao.getJoinRef(groupId, contactId).first()
+        groupDao.updateJoinRef(ref.copy(checked = checked))
     }
 }

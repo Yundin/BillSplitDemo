@@ -5,4 +5,5 @@ interface ApplicationProvider :
     ContactsListDependencies,
     AddContactDependencies,
     AddGroupDependencies,
-    ChooseContactsDependencies
+    ChooseContactsDependencies,
+    GroupDetailsDependencies

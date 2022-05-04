@@ -10,6 +10,7 @@
       <module name="Bill_Split_App.core" target="11" />
       <module name="Bill_Split_App.datasource" target="11" />
       <module name="Bill_Split_App.designsystem" target="11" />
+      <module name="Bill_Split_App.groupdetails" target="11" />
       <module name="Bill_Split_App.grouplist" target="11" />
       <module name="Bill_Split_App.mainscreen" target="11" />
     </bytecodeTargetLevel>

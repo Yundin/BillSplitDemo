@@ -7,5 +7,7 @@ import java.math.BigDecimal
 interface GroupsRepository {
     val groups: Flow<List<Group>>
 
+    fun getById(groupId: Long): Flow<Group>
     suspend fun addGroup(title: String, sum: BigDecimal, contactIds: List<Long>): Group
+    suspend fun setContactChecked(groupId: Long, contactId: Long, checked: Boolean)
 }

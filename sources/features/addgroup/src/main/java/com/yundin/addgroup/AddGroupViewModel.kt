@@ -111,7 +111,8 @@ class AddGroupViewModel @Inject constructor(
 
     private fun checkAmountValid(amount: String?): Boolean {
         return try {
-            BigDecimal(amount).scale() <= 2
+            val bigDecimal = BigDecimal(amount)
+            bigDecimal.scale() <= 2 && bigDecimal > BigDecimal.ZERO
         } catch (_: NumberFormatException) {
             false
         }

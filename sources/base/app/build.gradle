@@ -56,6 +56,7 @@ dependencies {
     implementation project(':addcontact')
     implementation project(':contactslist')
     implementation project(':designsystem')
+    implementation project(':groupdetails')
     implementation project(':choosecontacts')
 
     implementation libs.androidx.activity.compose

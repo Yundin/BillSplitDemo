@@ -38,3 +38,5 @@ include ':addgroup'
 project(':addgroup').projectDir = new File(rootDir, 'sources/features/addgroup')
 include ':choosecontacts'
 project(':choosecontacts').projectDir = new File(rootDir, 'sources/features/choosecontacts')
+include ':groupdetails'
+project(':groupdetails').projectDir = new File(rootDir, 'sources/features/groupdetails')

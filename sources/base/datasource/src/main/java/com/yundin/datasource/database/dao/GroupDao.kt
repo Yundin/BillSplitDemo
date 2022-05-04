@@ -1,9 +1,6 @@
 package com.yundin.datasource.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.yundin.core.model.Group
 import com.yundin.datasource.database.entity.GroupContactCrossRef
 import com.yundin.datasource.database.entity.GroupEntity
@@ -26,6 +23,13 @@ interface GroupDao {
 
     @Insert
     suspend fun addGroupPersonJoin(refs: List<GroupContactCrossRef>)
+
+    @Query("SELECT * FROM groupcontactcrossref " +
+            "where groupId = :groupId AND contactId = :contactId")
+    fun getJoinRef(groupId: Long, contactId: Long): Flow<GroupContactCrossRef>
+
+    @Update
+    suspend fun updateJoinRef(ref: GroupContactCrossRef)
 
     fun getGroups(): Flow<List<Group>> {
         return getGroupWithContactsJunction().map { list ->

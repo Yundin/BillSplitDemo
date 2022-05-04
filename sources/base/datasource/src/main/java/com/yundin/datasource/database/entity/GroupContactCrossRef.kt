@@ -37,7 +37,7 @@ data class GroupWithContacts(
             title = group.title,
             dateCreated = group.createdDate,
             amountSpent = group.checkAmount,
-            participantsCount = groupContacts.size,
+            participantsCount = groupContacts.size + 1,
             contacts = contacts.map { contactEntity ->
                 GroupContact(
                     contactEntity.contactId,

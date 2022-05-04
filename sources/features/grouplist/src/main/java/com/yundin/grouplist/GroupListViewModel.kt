@@ -9,7 +9,6 @@ import com.yundin.core.repository.GroupsRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
-import java.math.RoundingMode
 import javax.inject.Inject
 
 class GroupListViewModel @Inject constructor(
@@ -40,18 +39,6 @@ data class UiGroup(
     constructor(domain: Group) : this(
         domain.id,
         domain.title,
-        domain.amountSpent.divide(
-            BigDecimal.valueOf(domain.participantsCount + 1L),
-            2,
-            RoundingMode.HALF_UP
-        ).let { personSum ->
-            domain.contacts.sumOf { contact ->
-                if (contact.checked) {
-                    BigDecimal.ZERO
-                } else {
-                    personSum
-                }
-            }
-        }
+        domain.debtLeft
     )
 }

@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/sources/features/addgroup" />
             <option value="$PROJECT_DIR$/sources/features/choosecontacts" />
             <option value="$PROJECT_DIR$/sources/features/contactslist" />
+            <option value="$PROJECT_DIR$/sources/features/groupdetails" />
             <option value="$PROJECT_DIR$/sources/features/grouplist" />
             <option value="$PROJECT_DIR$/sources/features/mainscreen" />
           </set>

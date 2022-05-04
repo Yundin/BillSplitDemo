@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="check_amount_format">Check amount: %s</string>
+    <string name="debt_per_person_format">Debt per person: %s</string>
+    <string name="debt_left_format">Debt left: %s</string>
+    <string name="participants_subtitle">Participants:</string>
+</resources>

@@ -12,6 +12,7 @@ import com.yundin.addcontact.AddContactScreen
 import com.yundin.addgroup.AddGroupScreen
 import com.yundin.choosecontacts.ChooseContactsScreen
 import com.yundin.contactslist.ContactsListScreen
+import com.yundin.groupdetails.GroupDetailsScreen
 import com.yundin.grouplist.GroupListScreen
 import com.yundin.navigation.Screen
 
@@ -22,7 +23,7 @@ internal fun AppNavigation(
     showSnackbar: (String) -> Unit
 ) {
     NavHost(navController, startDestination = Screen.Groups.route, modifier = modifier) {
-        composable(Screen.Groups.route) { GroupListScreen() }
+        composable(Screen.Groups.route) { GroupListScreen(navController = navController) }
         composable(Screen.Contacts.route) {
             ContactsListScreen(showSnackbar = showSnackbar)
         }
@@ -48,6 +49,18 @@ internal fun AppNavigation(
                 navController = navController,
                 showSnackbar = showSnackbar,
                 selectedIds = backStackEntry.arguments?.getLongArray("selectedIds")
+            )
+        }
+        composable(
+            route = Screen.GroupDetails.route,
+            arguments = listOf(
+                navArgument("groupId") {
+                    type = NavType.LongType
+                }
+            )
+        ) { backStackEntry ->
+            GroupDetailsScreen(
+                groupId = backStackEntry.arguments?.getLong("groupId")!!
             )
         }
     }
