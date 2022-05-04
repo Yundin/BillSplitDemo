@@ -34,7 +34,7 @@ class ContactsListViewModel @Inject constructor(
             val isRemoved = contactsRepository.removeContact(contact.id)
             if (!isRemoved) {
                 _snackbarText.value =
-                    resourceProvider.getString(R.string.contact_could_not_be_deleted)
+                    resourceProvider.getString(R.string.contact_cannot_be_deleted)
             }
         }
     }
