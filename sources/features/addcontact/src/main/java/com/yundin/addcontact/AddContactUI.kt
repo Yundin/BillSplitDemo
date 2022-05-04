@@ -2,6 +2,7 @@ package com.yundin.addcontact
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yundin.addcontact.di.DaggerAddContactComponent
 import com.yundin.core.App
@@ -52,6 +54,9 @@ private fun AddContactScreenContent(
             value = name.orEmpty(),
             onValueChange = onNameChange,
             modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words
+            ),
             singleLine = true
         )
         AddContactButton(
