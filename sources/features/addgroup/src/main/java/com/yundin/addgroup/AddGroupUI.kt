@@ -55,9 +55,14 @@ fun AddGroupScreen(
             viewModel.onSnackbarShown()
         }
     }
-    LaunchedEffect(uiState.screenFinished) {
-        if (uiState.screenFinished) {
-            navController.popBackStack()
+    LaunchedEffect(uiState.createdGroupId) {
+        uiState.createdGroupId?.let { id ->
+            navController.navigate(
+                Screen.GroupDetails.route
+                    .replace("{groupId}", id.toString())
+            ) {
+                popUpTo(Screen.Groups.route)
+            }
         }
     }
     val chooseContactsResult = navController.currentBackStackEntry

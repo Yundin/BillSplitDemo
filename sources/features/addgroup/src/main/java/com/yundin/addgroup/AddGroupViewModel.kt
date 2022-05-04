@@ -39,14 +39,14 @@ class AddGroupViewModel @Inject constructor(
     fun onAddGroupClick() {
         if (validateWithErrors()) {
             viewModelScope.launch {
-                groupRepository.addGroup(
+                val addedGroup = groupRepository.addGroup(
                     title = currentUiState.groupTitle.text,
                     sum = BigDecimal(currentUiState.checkAmount.text),
                     contactIds = currentUiState.contacts.map { it.id }
                 )
                 _uiState.value = currentUiState.copy(
                     snackbarText = resourceProvider.getString(R.string.group_added),
-                    screenFinished = true
+                    createdGroupId = addedGroup.id
                 )
             }
         }
@@ -123,7 +123,7 @@ class AddGroupViewModel @Inject constructor(
         val checkAmount: FieldState = FieldState(),
         val contacts: List<Contact> = listOf(),
         val snackbarText: String? = null,
-        val screenFinished: Boolean = false,
+        val createdGroupId: Long? = null
     )
 }
 
