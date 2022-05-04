@@ -2,6 +2,8 @@ package com.yundin.choosecontacts
 
 import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.*
 import com.yundin.core.model.Contact
 import com.yundin.core.repository.ContactsRepository
@@ -28,7 +30,11 @@ class ChooseContactsViewModel @Inject constructor(
             inputName.asFlow()
         ) { contacts, selectedIds, inputName ->
             return@combine contacts
-                .filter { it.name.contains(inputName) }
+                .filter {
+                    val input = inputName.toLowerCase(Locale.current)
+                    val contactName = it.name.toLowerCase(Locale.current)
+                    contactName.contains(input)
+                }
                 .map {
                     UiContact(
                         domain = it,
