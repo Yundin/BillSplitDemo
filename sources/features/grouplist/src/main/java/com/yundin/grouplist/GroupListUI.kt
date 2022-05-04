@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yundin.core.App
-import com.yundin.core.model.Group
 import com.yundin.core.utils.daggerViewModelFactory
 import com.yundin.designsystem.GroupItem
 import com.yundin.grouplist.di.DaggerGroupListComponent
@@ -30,10 +29,10 @@ fun GroupListScreen() {
                 .viewModel
         }
     )
-    val groups: List<Group>? by viewModel.groups.observeAsState()
+    val groups: List<UiGroup>? by viewModel.groups.observeAsState()
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(groups.orEmpty()) { group ->
-            GroupItem(title = group.title, overallDebt = group.amountSpent)
+            GroupItem(title = group.title, debtLeft = group.debtLeft)
         }
     }
     if (groups.isNullOrEmpty()) {

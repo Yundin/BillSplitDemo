@@ -20,7 +20,7 @@ import java.math.BigDecimal
 @Composable
 fun GroupItem(
     title: String,
-    overallDebt: BigDecimal,
+    debtLeft: BigDecimal,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -28,7 +28,7 @@ fun GroupItem(
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        val isZeroDebt = overallDebt.compareTo(BigDecimal.ZERO) == 0
+        val isZeroDebt = debtLeft.compareTo(BigDecimal.ZERO) == 0
         val titleAlpha = if (isZeroDebt) 0.5f else 1f
         Text(
             text = title,
@@ -38,7 +38,7 @@ fun GroupItem(
 
         val debtText = when {
             isZeroDebt -> stringResource(R.string.group_no_debt_subtitle)
-            else -> stringResource(R.string.group_debt_subtitle_format, overallDebt)
+            else -> stringResource(R.string.group_debt_subtitle_format, debtLeft)
         }
         Text(text = debtText, color = Color.Gray)
     }
@@ -50,7 +50,7 @@ fun GroupItem(
 fun GroupPreview() {
     BillSplitAppTheme {
         Surface {
-            GroupItem(title = "Title", overallDebt = BigDecimal(100))
+            GroupItem(title = "Title", debtLeft = BigDecimal(100))
         }
     }
 }
@@ -61,7 +61,7 @@ fun GroupPreview() {
 fun GroupNoDebtPreview() {
     BillSplitAppTheme {
         Surface {
-            GroupItem(title = "Title", overallDebt = BigDecimal.ZERO)
+            GroupItem(title = "Title", debtLeft = BigDecimal.ZERO)
         }
     }
 }

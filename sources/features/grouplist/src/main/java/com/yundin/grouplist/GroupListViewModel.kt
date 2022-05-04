@@ -8,19 +8,50 @@ import com.yundin.core.model.Group
 import com.yundin.core.repository.GroupsRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
+import java.math.RoundingMode
 import javax.inject.Inject
 
 class GroupListViewModel @Inject constructor(
     private val groupsRepository: GroupsRepository
 ) : ViewModel() {
-    private val _groups: MutableLiveData<List<Group>> = MutableLiveData()
-    val groups: LiveData<List<Group>> = _groups
+    private val _groups: MutableLiveData<List<UiGroup>> = MutableLiveData()
+    val groups: LiveData<List<UiGroup>> = _groups
 
     init {
         viewModelScope.launch {
-            groupsRepository.groups.collect {
-                _groups.value = it
+            groupsRepository.groups.collect { domainList ->
+                _groups.value = domainList
+                    .sortedBy { it.dateCreated }
+                    .map { domainGroup ->
+                        UiGroup(domainGroup)
+                    }
+                    .sortedBy { it.debtLeft == BigDecimal.ZERO }
             }
         }
     }
+}
+
+data class UiGroup(
+    val id: Long,
+    val title: String,
+    val debtLeft: BigDecimal,
+) {
+    constructor(domain: Group) : this(
+        domain.id,
+        domain.title,
+        domain.amountSpent.divide(
+            BigDecimal.valueOf(domain.contacts.size + 1L),
+            2,
+            RoundingMode.HALF_UP
+        ).let { personSum ->
+            domain.contacts.sumOf { contact ->
+                if (contact.checked) {
+                    BigDecimal.ZERO
+                } else {
+                    personSum
+                }
+            }
+        }
+    )
 }
