@@ -30,18 +30,20 @@ fun GroupListScreen() {
         }
     )
     val groups: List<UiGroup>? by viewModel.groups.observeAsState()
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(groups.orEmpty()) { group ->
-            GroupItem(title = group.title, debtLeft = group.debtLeft)
+    if (groups != null) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(groups.orEmpty()) { group ->
+                GroupItem(title = group.title, debtLeft = group.debtLeft)
+            }
         }
-    }
-    if (groups.isNullOrEmpty()) {
-        Text(
-            textAlign = TextAlign.Center,
-            text = stringResource(R.string.no_groups),
-            modifier = Modifier
-                .fillMaxSize()
-                .wrapContentHeight()
-        )
+        if (groups.isNullOrEmpty()) {
+            Text(
+                textAlign = TextAlign.Center,
+                text = stringResource(R.string.no_groups),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentHeight()
+            )
+        }
     }
 }
