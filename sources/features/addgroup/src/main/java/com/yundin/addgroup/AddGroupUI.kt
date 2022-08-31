@@ -32,6 +32,7 @@ import com.yundin.addgroup.di.DaggerAddGroupComponent
 import com.yundin.core.App
 import com.yundin.core.model.Contact
 import com.yundin.core.utils.daggerViewModelFactory
+import com.yundin.core.utils.toCharSequence
 import com.yundin.designsystem.ContactItem
 import com.yundin.navigation.Screen
 
@@ -49,10 +50,11 @@ fun AddGroupScreen(
                 .viewModel
         }
     )
+    val context = LocalContext.current
     val uiState by viewModel.uiState.observeAsState(AddGroupViewModel.UiState())
     LaunchedEffect(uiState.snackbarText) {
         uiState.snackbarText?.let {
-            showSnackbar(it)
+            showSnackbar(it.toCharSequence(context).toString())
             viewModel.onSnackbarShown()
         }
     }
@@ -75,10 +77,10 @@ fun AddGroupScreen(
     }
     AddGroupScreenContent(
         groupTitle = uiState.groupTitle.text,
-        titleError = uiState.groupTitle.errorText,
+        titleError = uiState.groupTitle.errorText?.toCharSequence(context)?.toString(),
         onTitleChange = viewModel::onTitleChange,
         checkAmount = uiState.checkAmount.text,
-        amountError = uiState.checkAmount.errorText,
+        amountError = uiState.checkAmount.errorText?.toCharSequence(context)?.toString(),
         onAmountChange = viewModel::onAmountChange,
         contacts = uiState.contacts,
         onAddGroupClick = viewModel::onAddGroupClick,

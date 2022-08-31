@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import com.yundin.choosecontacts.di.DaggerChooseContactsComponent
 import com.yundin.core.App
 import com.yundin.core.utils.daggerViewModelFactory
+import com.yundin.core.utils.toCharSequence
 import com.yundin.designsystem.AddContactButton
 import com.yundin.designsystem.CheckableContactItem
 import com.yundin.navigation.Screen
@@ -43,10 +44,11 @@ fun ChooseContactsScreen(
             viewModel.setSelectedIds(selectedIds)
         }
     }
+    val context = LocalContext.current
     val snackbarText by viewModel.snackbarText.observeAsState()
     LaunchedEffect(snackbarText) {
         if (snackbarText != null) {
-            showSnackbar(snackbarText!!)
+            showSnackbar(snackbarText!!.toCharSequence(context).toString())
             viewModel.onSnackbarShown()
         }
     }

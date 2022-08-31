@@ -19,6 +19,7 @@ import com.yundin.contactslist.di.DaggerContactsListComponent
 import com.yundin.core.App
 import com.yundin.core.model.Contact
 import com.yundin.core.utils.daggerViewModelFactory
+import com.yundin.core.utils.toCharSequence
 import com.yundin.designsystem.ContactItem
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -35,10 +36,11 @@ fun ContactsListScreen(
                 .viewModel
         }
     )
+    val context = LocalContext.current
     val snackbarText by viewModel.snackbarText.observeAsState()
     LaunchedEffect(snackbarText) {
         if (snackbarText != null) {
-            showSnackbar(snackbarText!!)
+            showSnackbar(snackbarText!!.toCharSequence(context).toString())
             viewModel.onSnackbarShown()
         }
     }

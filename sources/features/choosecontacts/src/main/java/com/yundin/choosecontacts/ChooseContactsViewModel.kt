@@ -7,19 +7,18 @@ import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.*
 import com.yundin.core.model.Contact
 import com.yundin.core.repository.ContactsRepository
-import com.yundin.core.utils.ResourceProvider
+import com.yundin.core.utils.NativeText
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ChooseContactsViewModel @Inject constructor(
     private val contactsRepository: ContactsRepository,
-    private val resourceProvider: ResourceProvider
 ) : ViewModel() {
     private val _inputName = MutableLiveData("")
     val inputName: LiveData<String> = _inputName
-    private val _snackbarText = MutableLiveData<String?>(null)
-    val snackbarText: LiveData<String?> = _snackbarText
+    private val _snackbarText = MutableLiveData<NativeText?>(null)
+    val snackbarText: LiveData<NativeText?> = _snackbarText
 
     private val allContacts: Flow<List<Contact>> = contactsRepository.observeContacts()
     private val selectedContactIds = MutableStateFlow(listOf<Long>())
@@ -84,7 +83,7 @@ class ChooseContactsViewModel @Inject constructor(
         if (name.isNotBlank()) {
             addContact(name)
         } else {
-            _snackbarText.value = resourceProvider.getString(R.string.empty_name_error)
+            _snackbarText.value = NativeText.Resource(R.string.empty_name_error)
         }
     }
 
@@ -106,15 +105,15 @@ class ChooseContactsViewModel @Inject constructor(
             try {
                 val addedContact = contactsRepository.addContact(name)
                 _inputName.value = ""
-                _snackbarText.value = resourceProvider.getString(
+                _snackbarText.value = NativeText.Arguments(
                     R.string.contact_added_and_checked_format,
-                    name
+                    listOf(name)
                 )
                 selectedContactIds.emit(
                     selectedContactIds.value.toMutableList().apply { add(addedContact.id) }
                 )
             } catch (_: SQLiteConstraintException) {
-                _snackbarText.value = resourceProvider.getString(R.string.contact_exists_error)
+                _snackbarText.value = NativeText.Resource(R.string.contact_exists_error)
             }
         }
     }

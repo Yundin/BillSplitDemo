@@ -15,6 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yundin.addcontact.di.DaggerAddContactComponent
 import com.yundin.core.App
 import com.yundin.core.utils.daggerViewModelFactory
+import com.yundin.core.utils.toCharSequence
 import com.yundin.designsystem.AddContactButton
 
 @Composable
@@ -28,10 +29,11 @@ fun AddContactScreen(
             builder = DaggerAddContactComponent.builder()
         )
     )
+    val context = LocalContext.current
     val snackbarText by viewModel.snackbarText.observeAsState()
     LaunchedEffect(snackbarText) {
         if (snackbarText != null) {
-            showSnackbar(snackbarText!!)
+            showSnackbar(snackbarText!!.toCharSequence(context).toString())
             viewModel.onSnackbarShown()
         }
     }

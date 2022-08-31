@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yundin.core.model.Contact
 import com.yundin.core.repository.GroupsRepository
-import com.yundin.core.utils.ResourceProvider
+import com.yundin.core.utils.NativeText
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import javax.inject.Inject
 
 class AddGroupViewModel @Inject constructor(
     private val groupRepository: GroupsRepository,
-    private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(UiState())
@@ -45,7 +44,7 @@ class AddGroupViewModel @Inject constructor(
                     contactIds = currentUiState.contacts.map { it.id }
                 )
                 _uiState.value = currentUiState.copy(
-                    snackbarText = resourceProvider.getString(R.string.group_added),
+                    snackbarText = NativeText.Resource(R.string.group_added),
                     createdGroupId = addedGroup.id
                 )
             }
@@ -81,7 +80,7 @@ class AddGroupViewModel @Inject constructor(
         if (!checkTitleValid(currentUiState.groupTitle.text)) {
             _uiState.value = currentUiState.copy(
                 groupTitle = currentUiState.groupTitle.copy(
-                    errorText = resourceProvider.getString(R.string.group_title_validation_error)
+                    errorText = NativeText.Resource(R.string.group_title_validation_error)
                 )
             )
             allValid = false
@@ -89,14 +88,14 @@ class AddGroupViewModel @Inject constructor(
         if (!checkAmountValid(currentUiState.checkAmount.text)) {
             _uiState.value = currentUiState.copy(
                 checkAmount = currentUiState.checkAmount.copy(
-                    errorText = resourceProvider.getString(R.string.check_amount_validation_error)
+                    errorText = NativeText.Resource(R.string.check_amount_validation_error)
                 )
             )
             allValid = false
         }
         if (currentUiState.contacts.isEmpty()) {
             _uiState.value = currentUiState.copy(
-                snackbarText = resourceProvider.getString(
+                snackbarText = NativeText.Resource(
                     R.string.no_participants_validation_error
                 ),
             )
@@ -122,7 +121,7 @@ class AddGroupViewModel @Inject constructor(
         val groupTitle: FieldState = FieldState(),
         val checkAmount: FieldState = FieldState(),
         val contacts: List<Contact> = listOf(),
-        val snackbarText: String? = null,
+        val snackbarText: NativeText? = null,
         val createdGroupId: Long? = null
     )
 }
