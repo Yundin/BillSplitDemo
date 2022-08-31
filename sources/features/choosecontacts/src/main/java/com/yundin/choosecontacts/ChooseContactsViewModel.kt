@@ -8,7 +8,10 @@ import androidx.lifecycle.*
 import com.yundin.core.model.Contact
 import com.yundin.core.repository.ContactsRepository
 import com.yundin.core.utils.NativeText
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,16 +44,8 @@ class ChooseContactsViewModel @Inject constructor(
                     )
                 }
         }
-    private val _contactList = MutableLiveData(listOf<UiContact>())
-    val contactList: LiveData<List<UiContact>> = _contactList
-
-    init {
-        viewModelScope.launch {
-            contactListFlow.collect {
-                _contactList.value = it
-            }
-        }
-    }
+    val contactList: LiveData<List<UiContact>> =
+        contactListFlow.asLiveData(viewModelScope.coroutineContext)
 
     fun setSelectedIds(selected: LongArray) {
         Log.d("ASDSAD get", selected.joinToString())

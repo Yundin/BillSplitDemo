@@ -40,6 +40,7 @@ dependencies {
     implementation libs.compose.preview
     debugImplementation libs.compose.tooling
     implementation libs.compose.runtime.livedata
+    implementation libs.androidx.lifecycle.livedata
 
     implementation libs.navigation
     implementation libs.dagger.runtime
