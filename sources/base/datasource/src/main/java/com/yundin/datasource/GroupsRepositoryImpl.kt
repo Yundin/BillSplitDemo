@@ -16,8 +16,10 @@ import javax.inject.Inject
 class GroupsRepositoryImpl @Inject constructor(
     private val groupDao: GroupDao
 ) : GroupsRepository {
-    override val groups: Flow<List<Group>>
-        get() = groupDao.getGroups()
+
+    override fun observeGroups(): Flow<List<Group>> {
+        return groupDao.getGroups()
+    }
 
     override fun getById(groupId: Long): Flow<Group> {
         return groupDao.getGroupById(groupId)

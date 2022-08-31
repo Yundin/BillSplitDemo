@@ -23,7 +23,7 @@ class ContactsListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            contactsRepository.contacts.collect {
+            contactsRepository.observeContacts().collect {
                 _contacts.value = it
             }
         }

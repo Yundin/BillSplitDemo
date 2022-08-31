@@ -21,7 +21,7 @@ class ChooseContactsViewModel @Inject constructor(
     private val _snackbarText = MutableLiveData<String?>(null)
     val snackbarText: LiveData<String?> = _snackbarText
 
-    private val allContacts: Flow<List<Contact>> = contactsRepository.contacts
+    private val allContacts: Flow<List<Contact>> = contactsRepository.observeContacts()
     private val selectedContactIds = MutableStateFlow(listOf<Long>())
     private val contactListFlow: Flow<List<UiContact>> =
         combine(

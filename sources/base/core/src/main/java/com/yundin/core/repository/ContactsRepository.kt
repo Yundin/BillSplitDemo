@@ -5,7 +5,7 @@ import com.yundin.core.model.Contact
 import kotlinx.coroutines.flow.Flow
 
 interface ContactsRepository {
-    val contacts: Flow<List<Contact>>
+    fun observeContacts(): Flow<List<Contact>>
 
     /**
      * @throws SQLiteConstraintException when contact with [name] already exists

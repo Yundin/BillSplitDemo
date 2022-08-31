@@ -19,7 +19,7 @@ class GroupListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            groupsRepository.groups.collect { domainList ->
+            groupsRepository.observeGroups().collect { domainList ->
                 _groups.value = domainList
                     .sortedBy { it.dateCreated }
                     .map { domainGroup ->

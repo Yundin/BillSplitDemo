@@ -13,10 +13,12 @@ import javax.inject.Inject
 class ContactsRepositoryImpl @Inject constructor(
     private val contactDao: ContactDao
 ) : ContactsRepository {
-    override val contacts: Flow<List<Contact>>
-        get() = contactDao.getAll().map { contacts ->
+
+    override fun observeContacts(): Flow<List<Contact>> {
+        return contactDao.getAll().map { contacts ->
             contacts.map { it.toDomain() }
         }
+    }
 
     override suspend fun addContact(name: String): Contact {
         val addedId = contactDao.addContact(
