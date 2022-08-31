@@ -29,22 +29,22 @@ data class GroupWithContacts(
         associateBy = Junction(GroupContactCrossRef::class)
     )
     val contacts: List<ContactEntity>,
-) {
-    fun toDomain(): Group {
-        val checkedContactsMap = groupContacts.associate { it.contactId to it.checked }
-        return Group(
-            id = group.groupId,
-            title = group.title,
-            dateCreated = group.createdDate,
-            amountSpent = group.checkAmount,
-            participantsCount = groupContacts.size + 1,
-            contacts = contacts.map { contactEntity ->
-                GroupContact(
-                    contactEntity.contactId,
-                    contactEntity.name,
-                    checkedContactsMap.getValue(contactEntity.contactId)
-                )
-            }
-        )
-    }
+)
+
+internal fun GroupWithContacts.toDomain(): Group {
+    val checkedContactsMap = groupContacts.associate { it.contactId to it.checked }
+    return Group(
+        id = group.groupId,
+        title = group.title,
+        dateCreated = group.createdDate,
+        amountSpent = group.checkAmount,
+        participantsCount = groupContacts.size + 1,
+        contacts = contacts.map { contactEntity ->
+            GroupContact(
+                contactEntity.contactId,
+                contactEntity.name,
+                checkedContactsMap.getValue(contactEntity.contactId)
+            )
+        }
+    )
 }

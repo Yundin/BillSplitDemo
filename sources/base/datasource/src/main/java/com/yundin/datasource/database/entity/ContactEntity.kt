@@ -13,6 +13,6 @@ import com.yundin.core.model.Contact
 data class ContactEntity(
     @PrimaryKey(autoGenerate = true) val contactId: Long,
     @ColumnInfo(name = "name") val name: String,
-) {
-    fun toDomain() = Contact(contactId, name)
-}
+)
+
+internal fun ContactEntity.toDomain() = Contact(contactId, name)

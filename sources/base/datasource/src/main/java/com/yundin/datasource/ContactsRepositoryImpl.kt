@@ -5,6 +5,7 @@ import com.yundin.core.model.Contact
 import com.yundin.core.repository.ContactsRepository
 import com.yundin.datasource.database.dao.ContactDao
 import com.yundin.datasource.database.entity.ContactEntity
+import com.yundin.datasource.database.entity.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

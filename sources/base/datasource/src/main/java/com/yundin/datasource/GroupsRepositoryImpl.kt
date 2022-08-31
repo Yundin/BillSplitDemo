@@ -6,6 +6,7 @@ import com.yundin.core.repository.GroupsRepository
 import com.yundin.datasource.database.dao.GroupDao
 import com.yundin.datasource.database.entity.GroupContactCrossRef
 import com.yundin.datasource.database.entity.GroupEntity
+import com.yundin.datasource.database.entity.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
