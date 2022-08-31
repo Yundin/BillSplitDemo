@@ -35,8 +35,10 @@ data class UiGroup(
     val id: Long,
     val title: String,
     val debtLeft: BigDecimal,
-) {
-    constructor(domain: Group) : this(
+)
+
+internal fun UiGroup(domain: Group): UiGroup {
+    return UiGroup(
         domain.id,
         domain.title,
         domain.debtLeft

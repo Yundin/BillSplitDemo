@@ -123,6 +123,8 @@ data class UiContact(
     val id: Long,
     val name: String,
     val checked: Boolean
-) {
-    constructor(domain: Contact, selected: Boolean) : this(domain.id, domain.name, selected)
+)
+
+internal fun UiContact(domain: Contact, selected: Boolean): UiContact {
+    return UiContact(domain.id, domain.name, selected)
 }
