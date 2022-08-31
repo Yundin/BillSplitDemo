@@ -39,8 +39,8 @@ fun ContactsListScreen(
     val context = LocalContext.current
     val snackbarText by viewModel.snackbarText.observeAsState()
     LaunchedEffect(snackbarText) {
-        if (snackbarText != null) {
-            showSnackbar(snackbarText!!.toCharSequence(context).toString())
+        snackbarText?.let {
+            showSnackbar(it.toCharSequence(context).toString())
             viewModel.onSnackbarShown()
         }
     }

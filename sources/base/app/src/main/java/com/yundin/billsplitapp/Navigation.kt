@@ -60,7 +60,9 @@ internal fun AppNavigation(
             )
         ) { backStackEntry ->
             GroupDetailsScreen(
-                groupId = backStackEntry.arguments?.getLong("groupId")!!
+                groupId = checkNotNull(backStackEntry.arguments?.getLong("groupId")) {
+                    "groupId should not be null while navigating to GroupDetailsScreen"
+                }
             )
         }
     }
