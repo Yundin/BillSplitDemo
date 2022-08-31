@@ -8,6 +8,7 @@ import com.yundin.datasource.database.entity.GroupContactCrossRef
 import com.yundin.datasource.database.entity.GroupEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
@@ -18,11 +19,17 @@ class GroupsRepositoryImpl @Inject constructor(
 ) : GroupsRepository {
 
     override fun observeGroups(): Flow<List<Group>> {
-        return groupDao.getGroups()
+        return groupDao.getGroupWithContactsJunction().map { groupsWithContactsList ->
+            groupsWithContactsList.map {
+                it.toDomain()
+            }
+        }
     }
 
     override fun getById(groupId: Long): Flow<Group> {
-        return groupDao.getGroupById(groupId)
+        return groupDao.getGroupWithContactsJunctionById(groupId).map { groupWithContacts ->
+            groupWithContacts.toDomain()
+        }
     }
 
     override suspend fun addGroup(title: String, sum: BigDecimal, contactIds: List<Long>): Group {
@@ -43,7 +50,7 @@ class GroupsRepositoryImpl @Inject constructor(
                 )
             }
         )
-        return groupDao.getGroupById(groupId).first()
+        return getById(groupId).first()
     }
 
     override suspend fun setContactChecked(
